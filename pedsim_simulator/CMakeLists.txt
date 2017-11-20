@@ -21,7 +21,7 @@ set(PEDSIM_SIMULATOR_DEPENDENCIES
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS ${PEDSIM_SIMULATOR_DEPENDENCIES})
 find_package(Boost REQUIRED)
-find_package(Qt4 REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 find_package(Eigen REQUIRED)
 
 # dynamic reconfigure parameters
@@ -35,7 +35,7 @@ catkin_package(
 include_directories(include)
 include_directories(${Eigen_INCLUDE_DIRS})
 include_directories(${catkin_INCLUDE_DIRS})
-include(${QT_USE_FILE})
+#include(Qt5::Widgets)
 
 set(SOURCES
     src/simulator_node.cpp
@@ -105,13 +105,13 @@ set(MOC_FILES
 	include/pedsim_simulator/waypointplanner/shoppingplanner.h
 	include/pedsim_simulator/waypointplanner/queueingplanner.h
 )
-QT4_WRAP_CPP(MOC_SRCS_UI ${MOC_FILES})
+QT5_WRAP_CPP(MOC_SRCS_UI ${MOC_FILES})
 
 add_executable(pedsim_simulator ${SOURCES} ${MOC_SRCS_UI})
 add_dependencies(pedsim_simulator ${catkin_EXPORTED_TARGETS})
 add_dependencies(pedsim_simulator ${PROJECT_NAME}_gencfg)
 target_link_libraries(pedsim_simulator
-    ${QT_LIBRARIES} ${BOOST_LIBRARIES} ${catkin_LIBRARIES}
+		Qt5::Widgets ${BOOST_LIBRARIES} ${catkin_LIBRARIES}
 )
 
 add_executable(simulate_diff_drive_robot src/simulate_diff_drive_robot.cpp)
